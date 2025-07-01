@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lista de referencias - EducaOnline</title>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f8fa;
+            color: #333;
+        }
+        header {
+            background: #0d6efd;
+            color: white;
+            padding: 20px 40px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        header .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            letter-spacing: 1.5px;
+            cursor: default;
+        }
+        /* Menú sin recuadros, solo texto */
+        header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+        header nav ul li,
+        header nav ul li a {
+            background: none !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            color: white;
+        }
+        header nav ul li a {
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: block; /* para mayor área clicable */
+        }
+        header nav ul li a:hover,
+        header nav ul li a.active {
+            color: #ffc107;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 120px 20px 60px; /* Espacio para header fijo */
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #0d6efd;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 900px;
+            margin: auto;
+        }
+        ul li {
+            background-color: #293a52; /* azul oscuro */
+            color: white;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        ul li .numero {
+            margin-right: 15px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        ul li .texto {
+            flex-grow: 1;
+        }
+        ul li .icono {
+            width: 14px;
+            height: 14px;
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(-45deg);
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+        footer {
+            background: #212529;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+            margin-top: 60px;
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: #ffc107;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">sistemas operativos</div>
+    <nav>
+        <ul>
+            <li><a href="index.php">Inicio</a></li>
+            <li><a href="cursos.php">Menú</a></li>
+            <li><a href="index.php">Contacto</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h2>Lista de referencias</h2>
+    <?php
+    $referencias = [
+        "Tanenbaum, A. S.,& Bos,H. (2022).Sistemas operativos modernos(5ª ed.). Pearson",
+        "Patterson, D.A.,& Hennessy,.J.L.(2021).Computer organization and design(6ª ed.). Morgan Kaufmann.",
+        "Silberschatz, A., Galvin, PB y Gagne, G. (2018). Fundamentos de sistemas operativos (10ª ed.). Wiley.",
+        "Stallings, W. (2021). Organización y arquitectura de computadores (11ª ed.). Pearson.",
+        "IBM. (2020). IBM Spectrum Scale: Concepts, Planning, and Implementation Guide.",
+        "Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). Operating System Concepts (10th ed.). Wiley.",
+        "Tanenbaum, A. S., & Woodhull, A. S. (2007). Sistemas operativos: Diseño e implementación (3ª ed.). Prentice Hall.",
+        "Linz, P. (2011). Lenguajes formales y autómatas (5ª ed.). McGraw-Hill.",
+        "Silberschatz, A., Korth, H. F., & Sudarshan, S. (2011). Fundamentos de bases de datos (6ª ed.). McGraw-Hill.",
+        "Tanenbaum, A. S., & Bos, H. (2015). Modern Operating Systems (4th ed.). Pearson.",
+        "Paulina, R. (2016, 24 de febrero). Principios de hardware de E/S. YouTube. https://www.youtube.com/watch?v=5OA1L_Pp3yM",
+        "Luis, R. (2021, 18 de junio). Dispositivos de entrada y salida de una computadora.YouTube. https://www.youtube.com/watch?v=gK8ZSTiokws",
+        "Maestro de la Computación. (2019, 23 de septiembre). ¿Qué son los Drivers?.YouTube. https://www.youtube.com/watch?v=RULRzrg3auY",
+        "Claudio, G. (2021, 10 de marzo). Tipos de Interrupciones.YouTube. https://www.youtube.com/watch?v=0Q6wGDmIVGg",
+        "Tecnología. (2022, 05 de mayo). Acceso Directo a   Memoria. YouTube. https://www.youtube.com/watch?v=YiDwDRFAqcw",
+        "TECNOLOGIAS. (2018,17 de mayo). ¿Qué es un SOFTWARE?.YouTube. https://www.youtube.com/watch?v=1w3J3gTtU4Q",
+        "Mira como hacerlo. (2022,28 de octubre). ¿Qué es un SOFTWARE?. YouTube. https://www.youtube.com/watch?v=fZqYD7D_agk",
+        "ManageEngineLATAM. (2021, 13 de julio). ¿Qué es polling de dispositivos?. YouTube. https://www.youtube.com/watch?v=MU3RSLR9ZT4",
+        "Entorno simple. (2021, 4 de septiembre). Interrupciones de Sistema. YouTube. https://www.youtube.com/watch?v=vusZZtiVBqs",
+        "Arquitectura de Computadoras. (2020, 21 de octubre). Acceso Directo a Memoria (DMA). YouTube. https://www.youtube.com/watch?v=-58fmXP5xQs",
+        "Jesús, M. (2016, 22 de febrero). CAPAS DEL SOFTWARE DE E/S. YouTube. https://www.youtube.com/watch?v=SFKCisRZOwo",
+        "Diego, L. (2020, 16 de noviembre).Manejador de Interrupciones y Software. YouTube. https://www.youtube.com/watch?v=yodCCipfS5g",
+        "Andrés, W. (2021, 06 de enero). Clases de Controladores de Dispositivos .YouTube. https://www.youtube.com/watch?v=6UdMlaVE4og",
+        "Computer. (2018, 07 de enero). ¿Qué es Kernel?. https://www.youtube.com/watch?v=6EI3Ig7efWY"
+    ];
+
+    echo '<ul>';
+    foreach ($referencias as $index => $ref) {
+        $numero = $index + 1;
+        $mostrar_icono = in_array($index, []); 
+        echo '<li>';
+        echo '<span class="numero">' . $numero . '.</span>';
+        echo '<span class="texto">' . htmlspecialchars($ref) . '</span>';
+        if ($mostrar_icono) {
+            echo '<span class="icono"></span>';
+        }
+        echo '</li>';
+    }
+    echo '</ul>';
+    ?>
+</main>
+
+<footer>
+<p>Contacto: duodinamico@unidadV.com | Teléfono: +52 55 61 25 63 13</p>
+  <p>Síguenos en 
+    <a href="#" target="_blank">Facebook</a>, 
+    <a href="#" target="_blank">Twitter</a> y 
+    <a href="#" target="_blank">Instagram</a>
+  </p>
+  <p>© 2025 Unidad V - Todos los derechos reservados</p>
+</footer>
+
+</body>
+</html>
