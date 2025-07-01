@@ -153,9 +153,9 @@
   <div class="logo">Sistemas Operativos</div>
   <nav>
     <ul>
-      <li><a href="/pagina_sistemas/index.php">Inicio</a></li>
-      <li><a href="/pagina_sistemas/cursos.php" class="active">Menú</a></li>
-      <li><a href="/pagina_sistemas/videos.php">Videos</a></li> <!-- Enlace a Videos -->
+      <li><a href="/pagina_sistemas/index.html">Inicio</a></li>
+      <li><a href="/pagina_sistemas/cursos.html" class="active">Menú</a></li>
+      <li><a href="/pagina_sistemas/videos.html">Videos</a></li> <!-- Enlace a Videos -->
     </ul>
   </nav>
 </header>
@@ -251,7 +251,7 @@ for direccion in direcciones:
   <h2>Conclusión</h2>
   <p class="conclusion">Actúan como puente crítico entre el sistema operativo y el hardware.</p>
 
-  <p><a href="/pagina_sistemas/cursos.php">← Volver a Subtemas</a></p>
+  <p><a href="/pagina_sistemas/cursos.html">← Volver a Subtemas</a></p>
 </main>
 
 <footer>

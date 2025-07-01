@@ -174,9 +174,9 @@
   <div class="logo">Sistemas Operativos</div>
   <nav>
     <ul>
-      <li><a href="/pagina_sistemas/index.php">Inicio</a></li>
-      <li><a href="/pagina_sistemas/cursos.php" class="active">Menú</a></li>
-      <li><a href="/pagina_sistemas/videos.php">Videos</a></li>
+      <li><a href="/pagina_sistemas/index.html">Inicio</a></li>
+      <li><a href="/pagina_sistemas/cursos.html" class="active">Menú</a></li>
+      <li><a href="/pagina_sistemas/videos.html">Videos</a></li>
     </ul>
   </nav>
 </header>
@@ -263,7 +263,7 @@ if __name__ == "__main__":
     <p>Luis, R. (2021, 18 de junio). Dispositivos de entrada y salida de una computadora. YouTube. <a href="https://www.youtube.com/watch?v=gK8ZSTiokws" target="_blank">Ver video</a></p>
   </div>
 
-  <p><a href="/pagina_sistemas/cursos.php">← Volver a Subtemas</a></p>
+  <p><a href="/pagina_sistemas/cursos.html">← Volver a Subtemas</a></p>
 </main>
 
 <footer>

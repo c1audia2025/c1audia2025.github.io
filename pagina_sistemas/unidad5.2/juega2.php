@@ -172,10 +172,10 @@
   <div class="logo">Sistemas Operativos</div>
   <nav>
     <ul>
-      <li><a href="/pagina_sistemas/index.php">Inicio</a></li>
-      <li><a href="/pagina_sistemas/cursos.php">Menú</a></li>
-      <li><a href="/pagina_sistemas/index.php">Contacto</a></li>
-      <li><a href="/pagina_sistemas/referencias.php">Referencias</a></li>
+      <li><a href="/pagina_sistemas/index.html">Inicio</a></li>
+      <li><a href="/pagina_sistemas/cursos.html">Menú</a></li>
+      <li><a href="/pagina_sistemas/index.html">Contacto</a></li>
+      <li><a href="/pagina_sistemas/referencias.html">Referencias</a></li>
     </ul>
   </nav>
 </header>

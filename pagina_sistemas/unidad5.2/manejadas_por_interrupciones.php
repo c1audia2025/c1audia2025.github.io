@@ -149,9 +149,9 @@
   <div class="logo">Sistemas Operativos</div>
   <nav>
     <ul>
-      <li><a href="/pagina_sistemas/index.php">Inicio</a></li>
-      <li><a href="/pagina_sistemas/cursos.php" class="active">Menú</a></li>
-      <li><a href="/pagina_sistemas/videos.php">Videos</a></li>
+      <li><a href="/pagina_sistemas/index.html">Inicio</a></li>
+      <li><a href="/pagina_sistemas/cursos.html" class="active">Menú</a></li>
+      <li><a href="/pagina_sistemas/videos.html">Videos</a></li>
     </ul>
   </nav>
 </header>
@@ -237,7 +237,7 @@ print("Fin del programa principal.")
   <h2>Conclusión</h2>
   <p class="conclusion">El estándar actual para la mayoría de dispositivos de velocidad media.</p>
 
-  <p><a href="/pagina_sistemas/cursos.php">← Volver a Subtemas</a></p>
+  <p><a href="/pagina_sistemas/cursos.html">← Volver a Subtemas</a></p>
 </main>
 
 <footer>

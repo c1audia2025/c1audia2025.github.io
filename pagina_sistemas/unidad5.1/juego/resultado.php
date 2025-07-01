@@ -1,34 +1,3 @@
-<?php
-session_start();
-$puntaje = $_SESSION['puntaje'] ?? 0;
-$total = 4; // Total preguntas
-
-// Calcular porcentaje
-$porcentaje = ($puntaje / $total) * 100;
-
-// Limpiar sesión para reiniciar juego
-session_destroy();
-
-// Definir mensaje y colores según puntaje
-if ($porcentaje == 100) {
-    $mensaje = "¡Excelente! Has respondido todo correctamente 🎉";
-    $colorBarra = "#28a745"; // verde
-    $colorTexto = "#155724";
-} elseif ($porcentaje >= 75) {
-    $mensaje = "Muy bien, casi perfecto 👍";
-    $colorBarra = "#ffc107"; // amarillo
-    $colorTexto = "#856404";
-} elseif ($porcentaje >= 50) {
-    $mensaje = "Buen intento, sigue practicando 😉";
-    $colorBarra = "#fd7e14"; // naranja
-    $colorTexto = "#7f4e00";
-} else {
-    $mensaje = "No te rindas, ¡puedes mejorar! 💪";
-    $colorBarra = "#dc3545"; // rojo
-    $colorTexto = "#721c24";
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -54,7 +23,7 @@ if ($porcentaje == 100) {
       font-size: 1.4rem;
       font-weight: 700;
       margin-bottom: 25px;
-      color: <?= htmlspecialchars($colorTexto) ?>;
+      color: #155724; /* Default green */
     }
     .barra-progreso {
       position: relative;
@@ -67,7 +36,7 @@ if ($porcentaje == 100) {
       box-shadow: inset 0 1px 3px rgba(255,255,255,0.7);
     }
     .barra-llenada {
-      background: <?= htmlspecialchars($colorBarra) ?>;
+      background: #28a745; /* Default green */
       height: 100%;
       width: 0;
       border-radius: 20px 0 0 20px;
@@ -107,31 +76,45 @@ if ($porcentaje == 100) {
 <body>
 
   <h1>¡Juego Terminado!</h1>
-  <p class="mensaje"><?= htmlspecialchars($mensaje) ?></p>
+  <p class="mensaje" id="mensaje"></p>
   
   <div class="barra-progreso">
     <div class="barra-llenada" id="barraLlenada"></div>
     <div class="porcentaje-texto" id="porcentajeTexto">0%</div>
   </div>
 
-  <a href="tu_juego.php">Jugar de nuevo</a>
+  <a href="javascript:void(0);" onclick="resetGame()">Jugar de nuevo</a>
 
   <script>
-    const barra = document.getElementById('barraLlenada');
-    const texto = document.getElementById('porcentajeTexto');
-    const porcentaje = <?= round($porcentaje) ?>;
-    
-    let ancho = 0;
-    const intervalo = setInterval(() => {
-      if (ancho >= porcentaje) {
-        clearInterval(intervalo);
-      } else {
-        ancho++;
-        barra.style.width = ancho + '%';
-        texto.textContent = ancho + '%';
-      }
-    }, 15);
-  </script>
+    // Simular puntaje
+    const puntaje = 3; // Esto se puede cambiar a un valor calculado dinámicamente
+    const total = 4; // Total preguntas
 
-</body>
-</html>
+    // Calcular porcentaje
+    const porcentaje = (puntaje / total) * 100;
+
+    // Mensaje y colores según puntaje
+    let mensaje = '';
+    let colorBarra = '';
+    let colorTexto = '';
+
+    if (porcentaje == 100) {
+      mensaje = "¡Excelente! Has respondido todo correctamente 🎉";
+      colorBarra = "#28a745"; // verde
+      colorTexto = "#155724";
+    } else if (porcentaje >= 75) {
+      mensaje = "Muy bien, casi perfecto 👍";
+      colorBarra = "#ffc107"; // amarillo
+      colorTexto = "#856404";
+    } else if (porcentaje >= 50) {
+      mensaje = "Buen intento, sigue practicando 😉";
+      colorBarra = "#fd7e14"; // naranja
+      colorTexto = "#7f4e00";
+    } else {
+      mensaje = "No te rindas, ¡puedes mejorar! 💪";
+      colorBarra = "#dc3545"; // rojo
+      colorTexto = "#721c24";
+    }
+
+    // Mostrar mensaje
+    document.getElementById("mensaje").textContent

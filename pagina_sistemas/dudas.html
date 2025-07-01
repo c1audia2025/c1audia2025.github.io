@@ -1,32 +1,3 @@
-<?php
-// Procesar envío de formulario
-$mensaje_exito = "";
-$errores = [];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validar campos simples
-    $nombre = trim($_POST['nombre'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $mensaje = trim($_POST['mensaje'] ?? '');
-
-    if ($nombre === '') {
-        $errores[] = "El nombre es obligatorio.";
-    }
-    if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errores[] = "Un correo válido es obligatorio.";
-    }
-    if ($mensaje === '') {
-        $errores[] = "Por favor, escribe tu mensaje.";
-    }
-
-    if (!$errores) {
-        $mensaje_exito = "Gracias por contactarnos, $nombre. Recibimos tu mensaje correctamente.";
-        // Limpiar campos
-        $nombre = $email = $mensaje = '';
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -160,10 +131,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="logo">Unidad V - Sistemas Operativos</div>
   <nav>
     <ul>
-      <li><a href="index.php">Inicio</a></li>
-      <li><a href="cursos.php">Subtemas</a></li>
-      <li><a href="referencias.php">Referencias</a></li>
-      <li><a href="formulario.php" class="active">Contacto</a></li>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="cursos.html">Subtemas</a></li>
+      <li><a href="referencias.html">Referencias</a></li>
+      <li><a href="formulario.html" class="active">Contacto</a></li>
     </ul>
   </nav>
 </header>
@@ -171,29 +142,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main>
   <h1>Formulario Unidad V</h1>
 
-  <?php if ($errores): ?>
-    <div class="error">
-      <ul>
-        <?php foreach ($errores as $error): ?>
-          <li><?= htmlspecialchars($error) ?></li>
-        <?php endforeach; ?>
-      </ul>
-    </div>
-  <?php endif; ?>
+  <div id="message" class="success" style="display: none;"></div>
+  <div id="errorMessage" class="error" style="display: none;"></div>
 
-  <?php if ($mensaje_exito): ?>
-    <div class="success"><?= htmlspecialchars($mensaje_exito) ?></div>
-  <?php endif; ?>
-
-  <form method="post" action="">
+  <form id="contactForm">
     <label for="nombre">Nombre completo</label>
-    <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($nombre ?? '') ?>" required />
+    <input type="text" id="nombre" name="nombre" required />
 
     <label for="email">Correo electrónico</label>
-    <input type="email" id="email" name="email" value="<?= htmlspecialchars($email ?? '') ?>" required />
+    <input type="email" id="email" name="email" required />
 
     <label for="mensaje">Mensaje o comentario sobre Unidad V</label>
-    <textarea id="mensaje" name="mensaje" rows="6" required><?= htmlspecialchars($mensaje ?? '') ?></textarea>
+    <textarea id="mensaje" name="mensaje" rows="6" required></textarea>
 
     <button type="submit">Enviar</button>
   </form>
@@ -209,6 +169,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <p>© 2025 Unidad V - Todos los derechos reservados</p>
 </footer>
 
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Obtener los valores del formulario
+    const nombre = document.getElementById("nombre").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const mensaje = document.getElementById("mensaje").value.trim();
+
+    let errores = [];
+
+    // Validación
+    if (nombre === "") {
+      errores.push("El nombre es obligatorio.");
+    }
+
+    if (email === "" || !/\S+@\S+\.\S+/.test(email)) {
+      errores.push("Un correo válido es obligatorio.");
+    }
+
+    if (mensaje === "") {
+      errores.push("Por favor, escribe tu mensaje.");
+    }
+
+    // Mostrar mensajes de error o éxito
+    if (errores.length > 0) {
+      document.getElementById("errorMessage").innerHTML = errores.join("<br>");
+      document.getElementById("errorMessage").style.display = "block";
+      document.getElementById("message").style.display = "none";
+    } else {
+      document.getElementById("message").innerHTML = `Gracias por contactarnos, ${nombre}. Recibimos tu mensaje correctamente.`;
+      document.getElementById("message").style.display = "block";
+      document.getElementById("errorMessage").style.display = "none";
+
+      // Limpiar los campos del formulario
+      document.getElementById("contactForm").reset();
+    }
+  });
+</script>
+
 </body>
 </html>
+
 

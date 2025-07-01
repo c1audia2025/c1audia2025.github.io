@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>5.3.3 Software en Modo Usuario para E/S</title>
+  <title>5.3.1 Manejador de Interrupciones</title>
   <style>
     * {
       margin: 0;
@@ -153,92 +153,101 @@
   <div class="logo">Sistemas Operativos</div>
   <nav>
     <ul>
-      <li><a href="/pagina_sistemas/index.php">Inicio</a></li>
-      <li><a href="/pagina_sistemas/cursos.php" class="active">Menú</a></li>
-      <li><a href="/pagina_sistemas/videos.php">Videos</a></li> <!-- Enlace a Videos -->
+      <li><a href="/pagina_sistemas/index.html">Inicio</a></li>
+      <li><a href="/pagina_sistemas/cursos.html" class="active">Menú</a></li>
+      <li><a href="/pagina_sistemas/videos.html">Videos</a></li> <!-- Enlace a Videos -->
     </ul>
   </nav>
 </header>
 
 <main>
-  <h1>5.3.3 Software en Modo Usuario para E/S</h1>
+  <h1>5.3.1 Manejador de Interrupciones</h1>
 
   <h2>Introducción</h2>
-  <p>Esta capa proporciona APIs de alto nivel (ej.: <code>fopen()</code> en C) para que las aplicaciones accedan a dispositivos sin interactuar directamente con el kernel (Tanenbaum & Bos, 2022).</p>
+  <p>El manejador de interrupciones (ISR, Interrupt Service Routine) es código en el kernel que responde a señales de hardware/programa, preservando el estado del sistema (Stallings, 2021).</p>
+  <p>Según IBM (2020), el Manejador de Interrupciones de IBM Spectrum Scale: Concepts, Planning, and Implementation Guide, este componente es responsable de gestionar las interrupciones del sistema para garantizar un procesamiento eficiente de las operaciones de E/S, optimizando así el rendimiento en entornos de almacenamiento distribuido.</p>
 
-  <h2>Componentes</h2>
+  <h2>Funciones Clave</h2>
   <ul>
-    <li>Bibliotecas estándar: Como <code>stdio.h</code> en C.</li>
-    <li>Servicios del sistema: Llamadas como <code>read()</code> / <code>write()</code> en Unix.</li>
-    <li>Virtualización: <code>/dev</code> en Linux unifica dispositivos como archivos.</li>
-  </ul>
-
-  <h2>Ventajas</h2>
-  <ul>
-    <li>Simplicidad: Ocultar complejidad del hardware.</li>
-    <li>Portabilidad: Mismo código funciona en diferentes sistemas.</li>
+    <li>Salvar contexto: Registros CPU y estado del proceso actual.</li>
+    <li>Ejecutar rutina: Atender la interrupción (ej.: leer buffer del teclado).</li>
+    <li>Restaurar contexto: Reanudar la tarea interrumpida.</li>
   </ul>
 
   <h2>Ejemplo</h2>
-  <p>La función <code>printf()</code> en C usa buffering para minimizar llamadas al kernel (Stallings, 2021, p. 330).</p>
+  <p>En Linux, el ISR de un disco duro marca los buffers de datos como "listos" para evitar pérdidas (Tanenbaum & Bos, 2022, p. 245).</p>
 
-  <h2>Ejemplo de Código:</h2>
+  <h2>Optimizaciones</h2>
+  <ul>
+    <li>Interrupciones anidadas: Priorizar eventos urgentes.</li>
+    <li>Deferir trabajo: Delegar tareas no críticas a threads del kernel.</li>
+  </ul>
+
+  <h2>Ejemplo Código:</h2>
   <pre>
     <code>
-import os
+import time
+import threading
 
-# Simulamos un archivo de texto en el que realizaremos E/S
-archivo_path = 'ejemplo_datos.txt'
+# Simulamos un "botón" que puede generar una interrupción
+class Boton:
+    def __init__(self):
+        self.interrumpir = threading.Event()  # Evento que simula la interrupción (el botón presionado)
 
-# Función para escribir datos en el archivo (simulando E/S)
-def escribir_datos():
-    print(f"Modo Usuario: Escribiendo en el archivo '{archivo_path}'...")
-    with open(archivo_path, 'w') as archivo:
-        archivo.write("Este es un ejemplo de datos escritos por el software en modo usuario.\n")
-        archivo.write("Se utiliza para demostrar operaciones de E/S de manera controlada por el sistema operativo.")
-    print(f"Modo Usuario: Datos escritos en el archivo '{archivo_path}'.")
+    def presionar(self):
+        print("Botón presionado, generando interrupción...")
+        self.interrumpir.set()  # Generar la interrupción
 
-# Función para leer datos del archivo (simulando E/S)
-def leer_datos():
-    print(f"Modo Usuario: Leyendo datos desde el archivo '{archivo_path}'...")
-    with open(archivo_path, 'r') as archivo:
-        contenido = archivo.read()
-    print(f"Modo Usuario: Contenido leído:\n{contenido}")
+    def liberar(self):
+        self.interrumpir.clear()  # Limpiar la interrupción
 
-# Función principal que simula las operaciones de E/S en modo usuario
-def main():
-    # Verificamos si el archivo ya existe y lo eliminamos si es necesario
-    if os.path.exists(archivo_path):
-        os.remove(archivo_path)
-    
-    # Escribimos datos en el archivo
-    escribir_datos()
-    
-    # Leemos los datos desde el archivo
-    leer_datos()
+    def esperar_interrupcion(self):
+        self.interrumpir.wait()  # Espera hasta que el evento (interrupción) sea activado
 
-# Ejecutamos la función principal
+# Simulamos el Manejador de Interrupciones (ISR)
+def manejador_interrupcion(boton):
+    while True:
+        boton.esperar_interrupcion()  # Espera hasta que se presione el botón (interrupción)
+        print("¡Interrupción detectada! Ejecutando el manejador de interrupción...")
+        time.sleep(1)  # Simula el tiempo de procesamiento de la interrupción
+
+# Simula un sistema que utiliza un manejador de interrupciones
 if __name__ == "__main__":
-    main()
+    boton = Boton()
+
+    # Iniciar un hilo que ejecuta el manejador de interrupciones
+    hilo_ISR = threading.Thread(target=manejador_interrupcion, args=(boton,))
+    hilo_ISR.daemon = True  # Este hilo se detendrá cuando termine el programa principal
+    hilo_ISR.start()
+
+    # Simulamos que el botón es presionado en momentos aleatorios
+    for i in range(5):
+        print(f"Esperando la siguiente interrupción... ({i+1}/5)")
+        time.sleep(2)  # Simula el paso del tiempo
+        boton.presionar()  # Simula que el botón es presionado
+        time.sleep(1)  # Mantiene el botón presionado por 1 segundo
+        boton.liberar()  # El botón se libera (simula que se suelta el botón)
+
+    print("Fin del programa principal.")
     </code>
   </pre>
 
   <h2>Video</h2>
   <div class="video-container">
     <iframe 
-      src="https://www.youtube.com/embed/6EI3Ig7efWY" 
-      title="¿Qué es Kernel?" 
+      src="https://www.youtube.com/embed/yodCCipfS5g" 
+      title="Manejador de Interrupciones y Software" 
       frameborder="0" 
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
       allowfullscreen>
     </iframe>
-    <p>Computer. (2018, 07 de enero). ¿Qué es Kernel?. YouTube. <a href="https://www.youtube.com/watch?v=6EI3Ig7efWY" target="_blank">Ver video</a></p>
+    <p>Diego, L. (2020, 16 de noviembre). Manejador de Interrupciones y Software. YouTube. <a href="https://www.youtube.com/watch?v=yodCCipfS5g" target="_blank">Ver video</a></p>
   </div>
 
   <h2>Conclusión</h2>
-  <p class="conclusion">Permite desarrollar aplicaciones multiplataforma con interfaces consistentes.</p>
+  <p class="conclusion">Garantiza respuestas rápidas y confiables a eventos asíncronos.</p>
 
-  <p><a href="/pagina_sistemas/cursos.php">← Volver a Subtemas</a></p>
+  <p><a href="/pagina_sistemas/cursos.html">← Volver a Subtemas</a></p>
 </main>
 
 <footer>
